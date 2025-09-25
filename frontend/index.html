@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Gerenciador de Usuários</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Gerenciador de Usuários</h1>
+
+<div id="feedback-message" class="feedback"></div>
+
+<div id="form-container">
+  <h2>Cadastrar/Editar Usuário</h2>
+  <form id="user-form">
+    <input type="hidden" id="userId">
+    <input type="text" id="name" placeholder="Nome Completo" required>
+    <input type="date" id="birthDate" required>
+    <input type="text" id="document" placeholder="CPF/ID" required>
+    <input type="text" id="addressStreet" placeholder="Rua/Avenida" required>
+    <input type="text" id="addressNumber" placeholder="Número" required>
+    <input type="text" id="city" placeholder="Cidade" required>
+    <input type="text" id="state" placeholder="Estado (UF)" required maxlength="2">
+    <input type="text" id="zipCode" placeholder="CEP" required>
+    <button type="submit">Salvar</button>
+    <button type="button" id="cancel-edit-btn" style="display:none;">Cancelar Edição</button>
+  </form>
+</div>
+
+<hr>
+
+<h2>Usuários Cadastrados</h2>
+<table id="user-table">
+  <thead>
+  <tr>
+    <th>Nome</th>
+    <th>Documento</th>
+    <th>Cidade</th>
+    <th>Ações</th>
+  </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<script src="script.js"></script>
+</body>
+</html>

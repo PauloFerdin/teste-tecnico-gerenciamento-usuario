@@ -1,0 +1,7 @@
+body { font-family: sans-serif; }
+#form-container { /* ... */ }
+table { width: 100%; border-collapse: collapse; }
+th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+.feedback { padding: 10px; margin-bottom: 15px; border-radius: 4px; color: white; display: none; }
+.feedback.success { background-color: #28a745; display: block; }
+.feedback.error { background-color: #dc3545; display: block; }
