@@ -41,7 +41,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        // Se a validação falhar, o Spring lançará uma exceção antes de entrar no método
+        // Se a validação falhar, o Spring lançará uma exceção antes de entrar no método.
         User savedUser = userService.save(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }

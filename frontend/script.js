@@ -210,7 +210,7 @@ function init() {
         const validationErrors = validateForm();
         if (validationErrors.length > 0) {
             displayFormErrors(validationErrors);
-            return; 
+            return;
         }
 
         const saveButton = document.getElementById('save-button');

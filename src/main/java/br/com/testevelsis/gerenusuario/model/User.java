@@ -2,13 +2,12 @@ package br.com.testevelsis.gerenusuario.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data; // Importação do Lombok
+import lombok.Data;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Past;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "users") // Nome da tabela
@@ -16,7 +15,7 @@ import java.time.LocalDate;
 public class User {
 
     @Id // Campo da chave primária
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // 5. Configura a chave primária para ser autoincrementada pelo banco
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Configura a chave primária para ser autoincrementada pelo banco
     private Long id;
 
     @NotBlank(message = "O nome é obrigatório.")
@@ -28,7 +27,7 @@ public class User {
     private LocalDate birthDate;
 
     @NotBlank(message = "O documento é obrigatório.")
-    // A validação de formato de CPF é mais complexa, mas podemos validar o tamanho
+    // Validação do tamanho do CPF.
     @Size(min = 11, max = 14, message = "O documento deve ter um formato válido.")
     private String document;
 
