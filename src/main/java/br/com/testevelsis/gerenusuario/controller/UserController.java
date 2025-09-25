@@ -4,10 +4,12 @@ import br.com.testevelsis.gerenusuario.model.User;
 import br.com.testevelsis.gerenusuario.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @RestController
@@ -18,18 +20,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // Endpoint que LISTA o Usuário.
+    // Endpoint que LISTA todos os Usuário.
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
-    }
-
-    // Endpoint que CRIA o usuário.
-
-    @PostMapping
-    public User createUser(@Valid @RequestBody User user) {
-        return userService.createUser(user);
+    public ResponseEntity<Page<User>> getAllUsers(Pageable pageable) {
+        Page<User> userPage = userService.findAll(pageable);
+        return ResponseEntity.ok(userPage);
     }
 
     // Endpoint para BUSCAR um usuário por ID.
@@ -41,16 +37,21 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    // Endpoint que CRIA o usuário.
+
+    @PostMapping
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+        // Se a validação falhar, o Spring lançará uma exceção antes de entrar no método
+        User savedUser = userService.save(user);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
     // Endpoint para ATUALIZAR um usuário.
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody User userDetails) {
-        try {
-            User updatedUser = userService.updateUser(id, userDetails);
-            return ResponseEntity.ok(updatedUser);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        User updatedUser = userService.update(id, userDetails);
+        return ResponseEntity.ok(updatedUser);
     }
 
     // Endpoint para DELETAR um usuário.

@@ -2,7 +2,11 @@ package br.com.testevelsis.gerenusuario.service;
 
 import br.com.testevelsis.gerenusuario.model.User;
 import br.com.testevelsis.gerenusuario.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +18,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public Page<User> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     // Método para criar os usuários.
@@ -51,10 +55,30 @@ public class UserService {
         return userRepository.save(user);
     }
 
+
     public void deleteUser(Long id) {
         User user = getUserById(id); // Reutiliza o método para verificar se o usuário existe
         userRepository.delete(user);
     }
 
 
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    public User update(Long id, User userDetails) {
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado com o id: " + id));
+
+        existingUser.setName(userDetails.getName());
+        existingUser.setBirthDate(userDetails.getBirthDate());
+        existingUser.setDocument(userDetails.getDocument());
+        existingUser.setAddressStreet(userDetails.getAddressStreet());
+        existingUser.setAddressNumber(userDetails.getAddressNumber());
+        existingUser.setCity(userDetails.getCity());
+        existingUser.setState(userDetails.getState());
+        existingUser.setZipCode(userDetails.getZipCode());
+
+        return userRepository.save(existingUser);
+    }
 }

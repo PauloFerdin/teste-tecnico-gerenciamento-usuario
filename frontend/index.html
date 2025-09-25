@@ -2,50 +2,128 @@
 <html lang="pt-BR">
 
 <head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://bootswatch.com/5/slate/bootstrap.min.css" rel="stylesheet">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
   <meta charset="UTF-8">
   <title>Gerenciador de Usuários</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Gerenciador de Usuários</h1>
-<div id="feedback-message" class="feedback"></div>
+<main class="container mt-4">
 
-<div id="form-container">
-  <h2>Cadastrar/Editar Usuário</h2>
-  <form id="user-form">
-    <input type="hidden" id="userId">
-    <input type="text" id="name" placeholder="Nome Completo" required>
-    <input type="date" id="birthDate" required>
-    <input type="text" id="document" placeholder="CPF/ID" required>
-    <input type="text" id="addressStreet" placeholder="Rua/Avenida" required>
-    <input type="text" id="addressNumber" placeholder="Número" required>
-    <input type="text" id="city" placeholder="Cidade" required>
-    <input type="text" id="state" placeholder="Estado (UF)" required maxlength="2">
-    <input type="text" id="zipCode" placeholder="CEP" required>
-    <button type="submit">Salvar</button>
-    <button type="button" id="cancel-edit-btn" style="display:none;">Cancelar Edição</button>
-  </form>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Gerenciador de Usuários</h1>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#user-modal" id="add-user-btn">
+      <i class="fa-solid fa-plus"></i> Adicionar Usuário
+    </button>
+  </div>
+
+  <div id="feedback-message"></div>
+
+  <div class="card">
+    <div class="card-header">
+      <h2>Usuários Cadastrados</h2>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover" id="user-table">
+          <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Documento</th>
+            <th>Cidade</th>
+            <th class="text-end">Ações</th>
+          </tr>
+          </thead>
+          <tbody id="user-table-body">
+          </tbody>
+        </table>
+        <nav id="pagination-controls"></nav>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="modal fade" id="user-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-title">Adicionar Novo Usuário</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div id="form-errors" class="alert alert-danger d-none" role="alert">
+        </div>
+
+        <form id="user-form">
+          <input type="hidden" id="userId">
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="name" class="form-label">Nome Completo</label>
+              <input type="text" class="form-control" id="name" placeholder="Nome Completo" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="birthDate" class="form-label">Data de Nascimento</label>
+              <input type="date" class="form-control" id="birthDate" required>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="document" class="form-label">Documento (CPF/ID)</label>
+            <input type="text" class="form-control" id="document" placeholder="CPF/ID" required>
+          </div>
+
+          <hr class="my-4"> <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="zipCode" class="form-label">CEP</label>
+            <input type="text" class="form-control" id="zipCode" placeholder="Digite o CEP" required>
+          </div>
+        </div>
+
+          <div class="row">
+            <div class="col-md-9 mb-3">
+              <label for="addressStreet" class="form-label">Rua/Avenida</label>
+              <input type="text" class="form-control" id="addressStreet" placeholder="Preenchido automaticamente" required>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="addressNumber" class="form-label">Número</label>
+              <input type="text" class="form-control" id="addressNumber" placeholder="Nº" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-8 mb-3">
+              <label for="city" class="form-label">Cidade</label>
+              <input type="text" class="form-control" id="city" placeholder="Preenchido automaticamente" required>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="state" class="form-label">Estado (UF)</label>
+              <input type="text" class="form-control" id="state" placeholder="UF" required maxlength="2">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" id="save-button">
+              <span id="save-button-text">Salvar</span>
+              <span class="spinner-border spinner-border-sm d-none" id="spinner"></span>
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
 </div>
 
-<hr>
-
-<h2>Usuários Cadastrados</h2>
-<table id="user-table">
-  <thead>
-  <tr>
-    <th>Nome</th>
-    <th>Documento</th>
-    <th>Cidade</th>
-    <th>Ações</th>
-  </tr>
-  </thead>
-  <tbody id="user-table-body">
-  <tr id="loading-row"><td colspan="4">Carregando usuários...</td></tr>
-  </tbody>
-</table>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/imask"></script>
 <script src="script.js"></script>
 </body>

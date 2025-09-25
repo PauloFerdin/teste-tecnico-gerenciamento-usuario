@@ -1,6 +1,7 @@
 package br.com.testevelsis.gerenusuario.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data; // Importação do Lombok
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,30 +19,33 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 5. Configura a chave primária para ser autoincrementada pelo banco
     private Long id;
 
-    @NotBlank(message = "O nome não pode estar em branco")
-    @Size(min = 3, message = "O nome deve ter no mínimo 3 caracteres")
-    @Column(nullable = false) // Campo não pode ser nulo
+    @NotBlank(message = "O nome é obrigatório.")
+    @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres.")
     private String name;
 
-    @Past(message = "A data de nascimento deve ser no passado")
-    @Column(name = "birth_date", nullable = false)
+    @NotNull(message = "A data de nascimento é obrigatória.")
+    @Past(message = "A data de nascimento deve ser no passado.")
     private LocalDate birthDate;
 
-    @NotBlank(message = "O documento não pode estar em branco")
-    @Column(nullable = false, unique = true) // Documento não pode ser nulo e deve ser único
+    @NotBlank(message = "O documento é obrigatório.")
+    // A validação de formato de CPF é mais complexa, mas podemos validar o tamanho
+    @Size(min = 11, max = 14, message = "O documento deve ter um formato válido.")
     private String document;
 
-    @Column(name = "address_street")
+    @NotBlank(message = "A rua é obrigatória.")
     private String addressStreet;
 
-    @Column(name = "address_number")
+    @NotBlank(message = "O número é obrigatório.")
     private String addressNumber;
 
+    @NotBlank(message = "A cidade é obrigatória.")
     private String city;
 
+    @NotBlank(message = "O estado é obrigatório.")
+    @Size(min = 2, max = 2, message = "O estado deve ser uma sigla de 2 caracteres.")
     private String state;
 
-    @Column(name = "zip_code")
+    @NotBlank(message = "O CEP é obrigatório.")
     private String zipCode;
 
    // Campos de auditoria
