@@ -63,15 +63,22 @@ git clone https://github.com/PauloFerdin/teste-tecnico-gerenciamento-usuario.git
 Caso você faça o uso de PostgreSQL, no seu src/main/resources/application.properties
 
 spring.datasource.url=jdbc:postgresql://localhost:5432/[NOME_DO_SEU_BANCO]
+
 spring.datasource.username=[SEU_USUARIO_POSTGRES]
+
 spring.datasource.password=[SUA_SENHA_POSTGRES]
+
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
 
 Caso você faça o uso de MySQL, no seu src/main/resources/application.properties
 
 spring.datasource.url=jdbc:mysql://localhost:3306/[NOME_DO_SEU_BANCO]?createDatabaseIfNotExist=true
+
 spring.datasource.username=[SEU_USUARIO_MYSQL]
+
 spring.datasource.password=[SUA_SENHA_MYSQL]
+
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
 
 ### 3. Execute a Aplicação
