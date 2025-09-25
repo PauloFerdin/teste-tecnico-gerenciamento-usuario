@@ -83,8 +83,8 @@ O servidor back-end estará rodando em http://localhost:8081
 
 ### 4. Rodando o Front-End
 
->>> No seu Intellij (ou a ide que estiver usando) clique no index.html dentro da pasta front end, e rode o arquivo. 
->>> (No Intellij será botão direito em cima e Run Index.html)
+- No seu Intellij (ou a ide que estiver usando) clique no index.html dentro da pasta front end, e rode o arquivo. 
+- (No Intellij será botão direito em cima e Run Index.html)
 
 👨‍💻 Autor
 Desenvolvido por Paulo Cesar Maximiano Ferdin.
