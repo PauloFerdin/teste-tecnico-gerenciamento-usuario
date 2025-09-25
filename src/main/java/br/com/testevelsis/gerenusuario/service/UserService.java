@@ -18,20 +18,26 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id);
-    }
-
+    // Método para criar os usuários.
     public User createUser(User user) {
         // Validações de backend podem ser adicionadas aqui
         // Ex: if(userRepository.findByDocument(user.getDocument()).isPresent()) { throw new Exception("Documento já existe"); }
         return userRepository.save(user);
     }
 
-    public User updateUser(Long id, User userDetails) {
-        User user = userRepository.findById(id)
+    // Método para buscar o usuário por ID.
+    public User getUserById(Long id) {
+        // .findById(id) retorna um Optional, usamos .orElseThrow para lançar um erro se não encontrar
+        return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id: " + id));
+    }
 
+    // Método para atualizar um usuário
+    public User updateUser(Long id, User userDetails) {
+        // Primeiro, busca o usuário existente no banco
+        User user = getUserById(id);
+
+        // Atualiza os campos do usuário encontrado com os novos dados
         user.setName(userDetails.getName());
         user.setBirthDate(userDetails.getBirthDate());
         user.setDocument(userDetails.getDocument());
@@ -41,6 +47,14 @@ public class UserService {
         user.setState(userDetails.getState());
         user.setZipCode(userDetails.getZipCode());
 
+        // Salva o usuário atualizado no banco de dados
         return userRepository.save(user);
     }
+
+    public void deleteUser(Long id) {
+        User user = getUserById(id); // Reutiliza o método para verificar se o usuário existe
+        userRepository.delete(user);
+    }
+
+
 }

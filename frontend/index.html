@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <meta charset="UTF-8">
   <title>Gerenciador de Usuários</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <h1>Gerenciador de Usuários</h1>
-
 <div id="feedback-message" class="feedback"></div>
 
 <div id="form-container">
@@ -39,10 +41,12 @@
     <th>Ações</th>
   </tr>
   </thead>
-  <tbody>
+  <tbody id="user-table-body">
+  <tr id="loading-row"><td colspan="4">Carregando usuários...</td></tr>
   </tbody>
 </table>
 
+<script src="https://unpkg.com/imask"></script>
 <script src="script.js"></script>
 </body>
 </html>
